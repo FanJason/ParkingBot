@@ -1,15 +1,17 @@
-const express = require("express");
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./router/routes');
+require('dotenv').config();
+
 const app = express();
 const PORT = process.env.PORT || 3005;
-const bodyParser = require("body-parser");
-require("dotenv").config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const routes = require('./router/routes');
-app.use('/', routes);
+mongoose.connect(process.env.DATABASE_URL);
 
-app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`)
-});
+routes(app);
+
+app.listen(PORT, () => {});
