@@ -1,27 +1,28 @@
 {
   "name": "parkingbot",
   "version": "1.0.0",
-  "description": "A solution to automatically add friends to a parking pass",
+  "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node src/app.js",
+    "script": "node puppeteerScript.js",
+    "test": "echo \"No test specified\" && exit 0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FanJason/ParkingBot.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/FanJason/ParkingBot/issues"
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "nodemon": "^1.18.9"
   },
-  "homepage": "https://github.com/FanJason/ParkingBot#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
-    "body-parser": "^1.19.0",
-    "dotenv": "^8.0.0",
-    "express": "^4.17.1",
-    "mongodb": "^3.2.7",
-    "mongoose": "^5.6.11"
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.2",
+    "puppeteer": "^1.19.0"
   }
 }
