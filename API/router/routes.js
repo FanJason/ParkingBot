@@ -18,6 +18,26 @@ module.exports = (app) => {
     })
   });
 
+  app.post('/user', (req, res) => {
+    User.create(req.userData, function(error) {
+      if (error) { 
+        return next(error);
+      } else { 
+        res.end(response);
+      }
+    });
+  });
+
+  app.post('/pass', (req, res) => {
+    Pass.create(req.passData, function(error) {
+      if (error) { 
+        return next(error);
+      } else { 
+        res.end(response);
+      }
+    });
+  });
+
   app.post('/login', (req, res) => {
     User.authenticate(req.body.email, req.body.password, function (error, user) {
       if (error || !user) {
@@ -29,21 +49,5 @@ module.exports = (app) => {
         return next();
       }
     });
-  });
-
-  User.create(userData, function(error) {
-    if (error) { 
-      return next(error);
-    } else { 
-      res.end(response);
-    }
-  });
-
-  Pass.create(passData, function(error) {
-    if (error) { 
-      return next(error);
-    } else { 
-      res.end(response);
-    }
   });
 };
