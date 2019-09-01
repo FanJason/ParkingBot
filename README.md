@@ -1,2 +1,2 @@
 # ParkingBot
-A solution to automatically add friends to a parking pass
+A solution to automatically swap users between parking passes
