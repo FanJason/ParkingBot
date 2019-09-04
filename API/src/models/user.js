@@ -1,10 +1,16 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  username: {
+  userId: {
     type: String,
-    unique: true,
+    unique: true
   },
+  password: {
+    type: String
+  },
+  licensePlate: {
+    type: String
+  }
 });
 
 const User = mongoose.model('User', userSchema);

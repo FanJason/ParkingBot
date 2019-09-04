@@ -2,9 +2,12 @@ import 'dotenv/config';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import express from 'express';
+import bcrypt  from 'bcrypt';
+import jwt  from 'jsonwebtoken';
 
-import models, { connectDb } from './models';
 import routes from './routes';
+import models, { connectDb } from './models';
+import { getUserById } from './routes/user';
 import * as ParkingLots from './constants/ParkingLots';
 
 const app = express();
@@ -24,6 +27,22 @@ app.use(async (req, res, next) => {
 app.use('/users', routes.user);
 app.use('/passes', routes.pass);
 
+app.post('/login', async (req, res, next) => {
+  const user = await getUserById(req.context.models.User, req.body.userId);
+  const result = await bcrypt.compare(req.body.password, user.password);
+  if (result) {
+    const token = jwt.sign({
+        userId: req.body.userId
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "1hr"
+    });
+    return res.send({ user: user, token: token });
+  }
+  return res.send(new Error('Not Authenticated'));
+});
+
 // helper function for dev mode only
 const eraseDatabaseOnSync = true;
 connectDb().then(async () => {
@@ -41,12 +60,19 @@ connectDb().then(async () => {
 });
 
 const createEntries = async () => {
+  const password1 =  await bcrypt.hash("test", 10);
+  const password2 =  await bcrypt.hash("password", 10);
+
   const user1 = new models.User({
-    username: 'jason',
+    userId: 'jason',
+    password: password1,
+    licensePlate: "123"
   });
 
   const user2 = new models.User({
-    username: 'tarik',
+    userId: 'tarik',
+    password: password2,
+    licensePlate: "test"
   });
 
   const pass1 = new models.Pass({

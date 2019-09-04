@@ -34,7 +34,7 @@ const screenshot = 'permitsPage.png';
 		waitUntil: 'networkidle2'
 	});
 
-	await page.waitForSelector(".message");
+	await page.waitForSelector(".tableDataColumn");
 	await page.screenshot({ path: screenshot });
 
 	browser.close()
